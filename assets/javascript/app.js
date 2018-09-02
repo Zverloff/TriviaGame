@@ -4,7 +4,7 @@ window.onload = function(start) {
     var start = setInterval(function() {
        document.getElementById("timer").innerHTML = ":" + sec;
        sec--;
-       console.log(sec)
+      // console.log(sec)
        if (sec < 10) {
          sec = "0" + sec;
         }
@@ -18,39 +18,89 @@ window.onload = function(start) {
 var questionArr = [
     {
         question: "What year was Captain America created?",
-        answers: ["1941", "1955", "1964", "1939"],
-        correctAnswer: 0
-    },
-    {
-        question: "What company originally published Captain America comics?",
-        answers: ["Marvel Comics", "Timely Comics", "Atlas Comics", "DC Comics"],
+        answer1: "1941", 
+        answer2: "1955", 
+        answer3: "1964", 
+        answer4: "1939",
         correctAnswer: 1
     },
     {
-        question: "Who was the team that created Captain America?",
-        answers: ["Stan Lee and Jack Kirby", "Steve Ditko and Joe Simon", "Joe Simon and Jack Kirby", "Stan Lee and John Buscema"],
+        question: "What company originally published Captain America comics?",
+        answer1: "Marvel Comics", 
+        answer2: "Timely Comics", 
+        answer3: "Atlas Comics", 
+        answer4: "DC Comics",
         correctAnswer: 2
+        },
+    {
+        question: "Who was the team that created Captain America?",
+        answer1: "Stan Lee and Jack Kirby", 
+        answer2: "Steve Ditko and Joe Simon", 
+        answer3: "Joe Simon and Jack Kirby", 
+        answer4: "Stan Lee and John Buscema",
+        correctAnswer: 3
     },
     {
         question: "Captain America's WWII sidekick became what character in the modern era?",
-        answers: ["Winter Soldier", "Nomad", "Falcon", "Toro"],
-        correctAnswer: 0
+        answer1: "Winter Soldier", 
+        answer2: "Nomad", 
+        answer3: "Falcon", 
+        answer4: "Toro",
+        correctAnswer: 1
     },
     {
         question: "Who was Captain America's arch nemesis during WWII and again in the modern era?",
-        answers: ["Crossbones", "Batroc", "Baron Zemo", "Red Skull"],
-        correctAnswer: 3
+        answer1: "Crossbones", 
+        answer2: "Batroc", 
+        answer3: "Baron Zemo", 
+        answer4: "Red Skull",
+        correctAnswer: 4
     },
 ];
+var quest = document.getElementById("questionItself");
+var an1 = document.getElementById("option1");
+var an2 = document.getElementById("option2");
+var an3 = document.getElementById("option3");
+var an4 = document.getElementById("option4");
 
-for (var i = 0; i < questionArr.length; i++) {
-    $("#questionItself").text(questionArr[i].question)
-    var a = $("<input>");
-    a.addClass("anChoice");
-    a.attr("type", "radio");
-    a.text(questionArr[i].answers);    
-    $("#answerChoices").append(a);
+var next = document.getElementById(submitButton);
+
+var currentQuestion = 0;
+var score = 0;
+
+function questionLoad(x) {
+   var q = questionArr[x];
+   quest.textContent = (x + 1) + ". " + q.question;
+   an1.textContent = q.answer1;
+   an2.textContent = q.answer2;
+   an3.textContent = q.answer3;
+   an4.textContent = q.answer4;
+   console.log("test")
+
+};
+questionLoad(currentQuestion);
+
+function questionNext() {
+    console.log("test");
+    var answerChoice = document.querySelector("input[name='options']:checked");
+    return;
+    var choice = answerChoice.value;
+    if (questionArr[currentQuestion].correctAnswer === choice) {
+    score++
+    }
+    
+    currentQuestion++
+    questionLoad(currentQuestion);
 }
+
+$("#submitButton").click(questionNext());
+
+
+
+// for (var i = 0; i < questionArr.length; i++) {
+//     $("#questionItself").text(questionArr[i].question)
+//     $("#option1").text(questionsArr.answers[i])
+//}
 
 
 // create array of questions and answers   DONE
