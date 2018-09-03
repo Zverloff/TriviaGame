@@ -1,20 +1,21 @@
 //timer logic, still won't stop at 0
-window.onload = function(start) {
-    var sec = 5;
-    var start = setInterval(function() {
-       document.getElementById("timer").innerHTML = ":" + sec;
-       sec--;
-      // console.log(sec)
-       if (sec < 10) {
-         sec = "0" + sec;
-        }
-       if (sec === 0) {        
-        clearInterval(start);
-        nextQuestion();
-       }       
-    }, 1000);
-}
+function timerStart() {
+     var sec = 15;
+     var start = setInterval(function() {
+        document.getElementById("timer").innerHTML = ":" + sec;
+        sec--;
+       // console.log(sec)
+        if (sec < 10) {
+          sec = "0" + sec;
+         }
+        if (sec === 0) {        
+         clearInterval(start);
+         nextQuestion();
+        }       
+     }, 1000);
+ }
 
+//question array
 var questionArr = [
     {
         question: "What year was Captain America created?",
@@ -57,41 +58,71 @@ var questionArr = [
         correctAnswer: 4
     },
 ];
+
+//variables to grad ids to place text into
 var quest = document.getElementById("questionItself");
 var an1 = document.getElementById("option1");
 var an2 = document.getElementById("option2");
 var an3 = document.getElementById("option3");
 var an4 = document.getElementById("option4");
-
 var next = document.getElementById(submitButton);
+var finalScore = document.getElementById("resultBox");
 
+//variable setting beginning terms
 var currentQuestion = 0;
 var score = 0;
 
+//hiding quiz and results
+$("#resultBox").hide();
+$("#quizContainer").hide();
+
+//start button to begin quiz
+$("#startButton").click(questionLoad(currentQuestion));
+
+//function to load a question
 function questionLoad(x) {
-   var q = questionArr[x];
-   quest.textContent = (x + 1) + ". " + q.question;
-   an1.textContent = q.answer1;
-   an2.textContent = q.answer2;
-   an3.textContent = q.answer3;
-   an4.textContent = q.answer4;
-   console.log("test")
+    //hiding the starting div and shoqing the quiz div
+    $("#introBox").hide();
+    $("#quizContainer").show();
+    timerStart();
 
+    //populating the question and options from the array
+    var q = questionArr[x];
+   quest.innerHTML = (x + 1) + ". " + q.question;
+   an1.innerHTML = q.answer1;
+   an2.innerHTML = q.answer2;
+   an3.innerHTML = q.answer3;
+   an4.innerHTML = q.answer4;
+   console.log(currentQuestion);
 };
-questionLoad(currentQuestion);
 
+//function to load next question
 function questionNext() {
     console.log("test");
-    var answerChoice = document.querySelector("input[name='options']:checked");
-    return;
-    var choice = answerChoice.value;
+    //finding which radio box the user checked
+    var answerChoice = document.querySelector("input[name='options']:checked").value
+    
+    //checking for correct answer and adding to the score
     if (questionArr[currentQuestion].correctAnswer === choice) {
     score++
     }
     
-    currentQuestion++
+    //incrementing the question in the array
+    currentQuestion++;
+    console.log(currentQuestion)
+
+    //end game logic - hiding quiz and showing the results
+    if (currentQuestion === questionArr.length) {
+        $("#quizContainer").hide();
+        $("#resultBox").show();
+        finalScore.innerHTML = "You got" + score + "out of 5 questions correct";
+        
+    }
+
+
     questionLoad(currentQuestion);
 }
+questionLoad(currentQuestion);
 
 $("#submitButton").click(questionNext());
 

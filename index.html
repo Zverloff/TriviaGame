@@ -13,9 +13,16 @@
 </head>
 <body background="assets/images/cap.jpg">
     <h1 class="header">CAPTAIN AMERICA TRIVIA</h1>
-    <div class="quizContainer">
-        <h2 id="timer"></h2>
-        <div class="questionBox">
+    <div id="introBox">
+        <p>Press START to take the Quiz</p>
+        <form>
+            <input type="submit" id="startButton" value="START">
+        </form>
+
+    </div>
+    <div id="quizContainer">        
+        <div id="questionBox">
+            <h2 id="timer">:15</h2>
             <p id="questionNumber">Question #1</p>
             <p id="questionItself">Question itself</p>
             <form id="answerChoices">
@@ -28,6 +35,9 @@
             <input type="submit" id="submitButton" value="Next">
             </form>
         </div>
+    </div>
+    <div id="resultBox">
+        <p></p>
     </div>
     
 </body>
