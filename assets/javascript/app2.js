@@ -1,19 +1,5 @@
 //timer logic, still won't stop at 0
-function timerStart() {
-     var sec = 2;
-     var start = setInterval(function() {
-        document.getElementById("timer").innerHTML = ":" + sec;
-        sec--;
-       // console.log(sec)
-        if (sec < 10) {
-          sec = "0" + sec;
-         }
-        if (sec < 1) {        
-         clearInterval(start);
-         questionNext();
-        }       
-     }, 1000);
- }
+
 
 //question array
 var questionArr = [
@@ -77,7 +63,21 @@ var correctAnswer = 0;
 //$("#resultBox").hide();
 //$("#quizContainer").hide();
 
-
+function timerStart() {
+    var sec = 20;
+    var start = setInterval(function() {
+       document.getElementById("timer").innerHTML = ":" + sec;
+       sec--;
+      // console.log(sec)
+       if (sec < 10) {
+         sec = "0" + sec;
+        }
+       if (sec < 1) {        
+        clearInterval(start);
+        questionLoad(currentQuestion);
+       }       
+    }, 1000);
+}
 
 //function to load a question
 function questionLoad(x) {
@@ -94,22 +94,21 @@ function questionLoad(x) {
    an3.innerHTML = q.answer3;
    an4.innerHTML = q.answer4;
    console.log(currentQuestion);
-};
 
-//function to load next question
-function questionNext() {
-    console.log("test");
-    //finding which radio box the user checked
-    var answerChoice = document.querySelector("input[name='options']:checked").value
+   
+   var answerChoice = document.querySelector("input[name='options']:checked").value
     
     //checking for correct answer and adding to the score
     if (questionArr[currentQuestion].correctAnswer == answerChoice) {
-    score++
-    }
+    score++;
+    console.log(answerChoice)
+       };
+    
     
     //incrementing the question in the array
     currentQuestion++;
     console.log(currentQuestion)
+    
 
     //end game logic - hiding quiz and showing the results
     if (currentQuestion === questionArr.length) {
@@ -119,9 +118,11 @@ function questionNext() {
         
     }
 
-    questionLoad(currentQuestion);
-}
-//questionLoad(currentQuestion);
+    
+};
+
+//function to load next question
+
 
 //start button to begin quiz
 $("#startButton").on("click", function(){
@@ -129,7 +130,9 @@ $("#startButton").on("click", function(){
 });
 
 $("#submitButton").on("click", function(){
-    questionNext()
+    //clearInterval(start);
+    questionLoad(currentQuestion + 1);
+    
 });
 
 

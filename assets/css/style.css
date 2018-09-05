@@ -23,8 +23,23 @@
     border-style: solid;
     border-color: red;
     border-width: 10px;
+    display: none;
 }
 
 #timer {
     height: 50px;
+}
+
+#introBox {
+    background-color: white;
+    width: 500px;
+    margin:auto;
+    height: 200px;
+    border-style: solid;
+    border-color: red;
+    border-width: 10px;
+}
+
+#resultBox {
+    display: none;
 }
