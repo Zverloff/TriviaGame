@@ -1,18 +1,24 @@
 //timer logic, still won't stop at 0
-function timerStart() {
-     var sec = 2;
-     var start = setInterval(function() {
-        document.getElementById("timer").innerHTML = ":" + sec;
-        sec--;
-       // console.log(sec)
-        if (sec < 10) {
-          sec = "0" + sec;
-         }
-        if (sec < 1) {        
-         clearInterval(start);
-         questionNext();
-        }       
-     }, 1000);
+function countdown() {
+    sec = 5;
+    $("#timer").html("00:" + seconds);
+    answered = true;
+    time = setInterval(showTimer, 1000);
+}
+
+function showTimer() {
+     sec --
+     if (sec < 10) {
+         $('#timer').html("00:0" + sec)
+     }
+     else {
+        $('#timer').html("00:" + sec)
+     }
+     if (seconds < 1) {
+        clearInterval(time);
+        answered = false;
+        $('#timer').html("Time's Up!")
+    }
  }
 
 //question array
@@ -84,7 +90,7 @@ function questionLoad(x) {
     //hiding the starting div and shoqing the quiz div
     $("#introBox").hide();
     $("#quizContainer").show();
-    timerStart();
+    countdown();
 
     //populating the question and options from the array
     var q = questionArr[x];

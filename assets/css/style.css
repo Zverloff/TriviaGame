@@ -15,7 +15,7 @@
     margin: 20px;
 }
 
-#quizContainer {
+#quizContainer, #resultBox {
     background-color: white;
     margin: auto;
     width: 750px;
@@ -40,6 +40,3 @@
     border-width: 10px;
 }
 
-#resultBox {
-    display: none;
-}

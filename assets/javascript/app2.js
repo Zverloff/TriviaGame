@@ -43,6 +43,14 @@ var questionArr = [
         answer4: "Red Skull",
         correctAnswer: 4
     },
+    {
+        question: "",
+        answer1: "",
+        answer2: "",
+        answer3: "",
+        answer4: "",
+        correctAnswer: 3
+    }
 ];
 
 //variables to grad ids to place text into
@@ -63,65 +71,71 @@ var correctAnswer = 0;
 //$("#resultBox").hide();
 //$("#quizContainer").hide();
 
-function timerStart() {
-    var sec = 20;
-    var start = setInterval(function() {
-       document.getElementById("timer").innerHTML = ":" + sec;
-       sec--;
-      // console.log(sec)
-       if (sec < 10) {
-         sec = "0" + sec;
-        }
-       if (sec < 1) {        
-        clearInterval(start);
-        questionLoad(currentQuestion);
-       }       
-    }, 1000);
+function countdown() {
+    sec = 15;
+    $("#timer").html("00:" + sec);
+    answered = true;
+    time = setInterval(showTimer, 1000);
 }
+
+function showTimer() {
+     sec --
+     if (sec < 10) {
+         $('#timer').html("00:0" + sec)
+     }
+     else {
+        $('#timer').html("00:" + sec)
+     }
+     if (sec < 1) {
+        clearInterval(time);
+        answered = false;
+        $('#timer').html("Time's Up!")
+    }
+ }
 
 //function to load a question
 function questionLoad(x) {
     //hiding the starting div and shoqing the quiz div
     $("#introBox").hide();
     $("#quizContainer").show();
-    timerStart();
+    countdown();
+    // var ele = document.getElementsByName("options");
+    //     for(var i=0;i<ele.length;i++)
+    //     ele[i].checked = false;
 
     //populating the question and options from the array
     var q = questionArr[x];
-   quest.innerHTML = (x + 1) + ". " + q.question;
-   an1.innerHTML = q.answer1;
-   an2.innerHTML = q.answer2;
-   an3.innerHTML = q.answer3;
-   an4.innerHTML = q.answer4;
-   console.log(currentQuestion);
-
+        quest.innerHTML = "Question " + (x + 1) + ": " + q.question;
+        an1.innerHTML = q.answer1;
+        an2.innerHTML = q.answer2;
+        an3.innerHTML = q.answer3;
+        an4.innerHTML = q.answer4;
+//console.log(questionArr[x].correctAnswer)
    
-   var answerChoice = document.querySelector("input[name='options']:checked").value
-    
-    //checking for correct answer and adding to the score
-    if (questionArr[currentQuestion].correctAnswer == answerChoice) {
-    score++;
-    console.log(answerChoice)
-       };
-    
-    
-    //incrementing the question in the array
-    currentQuestion++;
-    console.log(currentQuestion)
-    
+   
 
-    //end game logic - hiding quiz and showing the results
-    if (currentQuestion === questionArr.length) {
-        $("#quizContainer").hide();
-        $("#resultBox").show();
-        finalScore.innerHTML = "You got" + score + "out of 5 questions correct";
-        
-    }
+   $("#submitButton").on("click", function(){
+    answerChoice = $("input[name='options']:checked").val()
+    clearInterval(time);   
+    questionLoad(currentQuestion);
+    //answer(x)   
 
+    });   
     
 };
 
-//function to load next question
+function answer(x) {
+    if (answerChoice === questionArr[x].correctAnswer) {
+        score++
+    }
+    if (currentQuestion === (questionArr.length)) {
+        $("#quizContainer").hide();
+        $("#resultBox").show();
+        finalScore.innerHTML = "You got " + score + " out of 5 questions correct";
+        
+    }
+}
+
 
 
 //start button to begin quiz
@@ -129,24 +143,8 @@ $("#startButton").on("click", function(){
     questionLoad(currentQuestion)
 });
 
-$("#submitButton").on("click", function(){
-    //clearInterval(start);
-    questionLoad(currentQuestion + 1);
-    
-});
+//load next question on submit button
 
 
 
 
-// for (var i = 0; i < questionArr.length; i++) {
-//     $("#questionItself").text(questionArr[i].question)
-//     $("#option1").text(questionsArr.answers[i])
-//}
-
-
-// create array of questions and answers   DONE
-//create layers of slides using zindex or slide info in and out using jquery in a central div var example = $(<div>).attr("class", "newDiv")
-//call them one at a time by changing class and having container display that class, while unused class is hidden
-//create radio boxes for answer choices
-//create button to submit answer and move to next question
-//check answers and compile results - for each right answer: score++
